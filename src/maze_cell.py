@@ -26,3 +26,6 @@ class Maze_Cell:
             left_wall = Line(Point(self._x1, self._y1), Point(self._x1, self._y2))
             self._window.draw_line(left_wall, "black")
         return
+
+    def __repr__(self):
+        return f"Maze_Cell x1: {self._x1}, y1: {self._y1}, x2: {self._x2}, y2: {self._y2}" + '\n' + f"walls: {self.has_top_wall},{self.has_bottom_wall},{self.has_left_wall},{self.has_right_wall}"
