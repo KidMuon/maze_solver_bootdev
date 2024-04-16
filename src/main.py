@@ -1,5 +1,5 @@
 from window import Window
-from point import Point, Line
+from simple_geometry import Point, Line
 
 def main():
     win = Window(800, 600)
