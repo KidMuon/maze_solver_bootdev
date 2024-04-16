@@ -4,9 +4,9 @@ class Point:
         self.y = y
 
 class Line:
-    def __init__(self, point1, point2):
-        self.start = point1
-        self.end = point2
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
 
     def draw(self, canvas, fill):
         canvas.create_line(self.start.x, self.start.y,
