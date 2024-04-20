@@ -9,6 +9,7 @@ def main():
 
     maze = Maze(100, 100, 20, 20, 25, 25, win)
     maze._create_cells()
+    maze._break_entrance_and_exit()
 
     win.wait_for_close()
 

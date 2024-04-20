@@ -25,11 +25,14 @@ class Maze:
                 new_cell = Maze_Cell(Point(cell_start_x, cell_start_y), Point(cell_end_x, cell_end_y), self.window)
 
                 self._cells[col_index].append(new_cell)
-
+        
+        if self.window:
+            self._draw_maze()
+    
+    def _draw_maze(self):
         for col_index in range(self.num_cols):
             for row_index in range(self.num_rows):
                 self._draw_cell(col_index, row_index)        
-
 
     def _draw_cell(self, i, j):
         self._cells[i][j].draw()
@@ -37,4 +40,9 @@ class Maze:
 
     def _animate(self):
         self.window.redraw()
-        time.sleep(0.05)
+        # time.sleep(0.05)
+
+    def _break_entrance_and_exit(self):
+        self._cells[0][0].has_top_wall = False
+        self._cells[-1][-1].has_bottom_wall = False
+        self._draw_maze()
