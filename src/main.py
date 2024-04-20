@@ -5,31 +5,31 @@ from itertools import product
 
 def main():
     win = Window(800, 600)
-    
-    top_left_points = []
-    for x in range(4):
-        for y in range(4):
-            top_left_points.append(Point(x * 125 + 50, y * 125 + 50))
-    
-    bottom_right_points = [Point(list_point.x + 110, list_point.y + 110) for list_point in top_left_points]
 
-    maze_cell_origins = zip(top_left_points, bottom_right_points)
+    c1 = Maze_Cell(Point(50, 50), Point(100, 100), win)
+    c1.has_right_wall = False
+    c1.draw()
 
-    maze_cells = []
-    for top_left, bottom_right in maze_cell_origins:
-        maze_cells.append(Maze_Cell(top_left, bottom_right, win))
+    c2 = Maze_Cell(Point(100, 50), Point(150, 100), win)
+    c2.has_left_wall = False
+    c2.has_bottom_wall = False
+    c2.draw()
 
-    wall_filters = list(product([True, False], repeat=4))
-    for i in range(16):
-        maze_cells[i].has_left_wall = wall_filters[i][0]
-        maze_cells[i].has_right_wall = wall_filters[i][1]
-        maze_cells[i].has_top_wall = wall_filters[i][2]
-        maze_cells[i].has_bottom_wall = wall_filters[i][3]
-    
-    for maze_cell in maze_cells:
-        print(maze_cell)
-        maze_cell.draw()
-    
+    c1.draw_move(c2)
+
+    c3 = Maze_Cell(Point(100, 100), Point(150, 150), win)
+    c3.has_top_wall = False
+    c3.has_right_wall = False
+    c3.draw()
+
+    c2.draw_move(c3)
+
+    c4 = Maze_Cell(Point(150, 100), Point(200, 150), win)
+    c4.has_left_wall = False
+    c4.draw()
+
+    c3.draw_move(c4, True)
+
     win.wait_for_close()
 
 

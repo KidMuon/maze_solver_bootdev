@@ -29,3 +29,15 @@ class Maze_Cell:
 
     def __repr__(self):
         return f"Maze_Cell x1: {self._x1}, y1: {self._y1}, x2: {self._x2}, y2: {self._y2}" + '\n' + f"walls: {self.has_top_wall},{self.has_bottom_wall},{self.has_left_wall},{self.has_right_wall}"
+
+    def get_center(self):
+        return Point((self._x1 + self._x2) / 2, (self._y1 + self._y2) / 2)
+
+    def draw_move(self, to_cell, undo=False):
+        start = self.get_center()
+        end = to_cell.get_center()
+        connecting_line = Line(start, end)
+        if undo:
+            self._window.draw_line(connecting_line, "gray")
+        else:
+            self._window.draw_line(connecting_line, "red")
