@@ -14,6 +14,7 @@ class Maze_Cell:
         self.has_right_wall = True
         self.has_top_wall = True
         self.has_bottom_wall = True
+        self.visited = False
 
     def draw(self):
         top_wall = Line(Point(self._x1, self._y1), Point(self._x2, self._y1))

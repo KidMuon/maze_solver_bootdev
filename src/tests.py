@@ -17,5 +17,22 @@ class Tests(unittest.TestCase):
         self.assertFalse(m1._cells[0][0].has_top_wall)
         self.assertFalse(m1._cells[-1][-1].has_bottom_wall)
 
+    def test_cell_visited_flags(self):
+        rows, cols = 20, 20
+        m1 = Maze(100, 100, rows, cols, 25, 25)
+        m1._create_cells()
+        for col_index in range(cols):
+            for row_index in range(rows):
+                self.assertFalse(m1._cells[col_index][row_index].visited)
+        m1._break_all_the_walls()
+        for col_index in range(cols):
+            for row_index in range(rows):
+                self.assertTrue(m1._cells[col_index][row_index].visited)
+        m1._reset_cells_visited()
+        for col_index in range(cols):
+            for row_index in range(rows):
+                self.assertFalse(m1._cells[col_index][row_index].visited)
+
+
 if __name__ == "__main__":
     unittest.main()
