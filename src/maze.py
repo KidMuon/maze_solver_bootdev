@@ -58,7 +58,11 @@ class Maze:
 
     def _break_all_the_walls(self):
         self._break_entrance_and_exit()
-        self._break_walls_r(0, 0)
+
+        start_row = self.num_rows // 2
+        start_col = self.num_cols // 2
+
+        self._break_walls_r(start_col, start_row)
         self._draw_maze()
 
     def _break_walls_r(self, i, j):
@@ -109,4 +113,3 @@ class Maze:
         for col_index in range(self.num_cols):
             for row_index in range(self.num_rows):
                 self._cells[col_index][row_index].visited = False
-        
