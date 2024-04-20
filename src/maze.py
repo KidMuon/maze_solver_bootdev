@@ -26,10 +26,12 @@ class Maze:
 
                 self._cells[col_index].append(new_cell)
         
-        if self.window:
-            self._draw_maze()
+        self._draw_maze()
     
     def _draw_maze(self):
+        if not self.window:
+            return 
+
         for col_index in range(self.num_cols):
             for row_index in range(self.num_rows):
                 self._draw_cell(col_index, row_index)        
