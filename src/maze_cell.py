@@ -1,7 +1,7 @@
 from simple_geometry import Point, Line
 
 class Maze_Cell:
-    def __init__(self, top_left_point: Point, bottom_right_point: Point, window):
+    def __init__(self, top_left_point: Point, bottom_right_point: Point, window = None):
         self._x1 = top_left_point.x
         self._y1 = top_left_point.y
         self._x2 = bottom_right_point.x
