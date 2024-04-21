@@ -17,8 +17,10 @@ class Maze:
 
         self._cells = []
 
+    def generate(self):
         self._create_cells()
         self._break_all_the_walls()
+        self._reset_cells_visited()
 
     def _create_cells(self):
         for col_index in range(self.num_cols):
@@ -47,9 +49,9 @@ class Maze:
         self._cells[i][j].draw()
         self._animate()
 
-    def _animate(self):
+    def _animate(self, delay = 0):
         self.window.redraw()
-        # time.sleep(0.05)
+        time.sleep(delay)
 
     def _break_entrance_and_exit(self):
         self._cells[0][0].has_top_wall = False
@@ -96,16 +98,16 @@ class Maze:
             self._break_walls_r(i_, j_)
 
     def _break_between(self, i, j, i_, j_):
-        if j > j_:
+        if j - 1 == j_:
             self._cells[i][j].has_top_wall = False
             self._cells[i_][j_].has_bottom_wall = False
-        if j < j_:
+        if j == j_ - 1:
             self._cells[i][j].has_bottom_wall = False
             self._cells[i_][j_].has_top_wall = False
-        if i > i_:
+        if i - 1 == i_:
             self._cells[i][j].has_left_wall = False
             self._cells[i_][j_].has_right_wall = False
-        if i < i_:
+        if i == i_ - 1:
             self._cells[i][j].has_right_wall = False
             self._cells[i_][j_].has_left_wall = False
         
@@ -113,3 +115,49 @@ class Maze:
         for col_index in range(self.num_cols):
             for row_index in range(self.num_rows):
                 self._cells[col_index][row_index].visited = False
+
+    def solve(self):
+        self._solve_r(0, 0)
+
+    def _solve_r(self, i, j):
+        self._animate(0.05)
+        current_cell = self._cells[i][j]
+        current_cell.visited = True
+        solved = False
+        
+        if i == self.num_cols - 1 and j == self.num_rows - 1:
+            return True
+        
+        directions = [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]
+        
+        while len(directions) != 0:
+            i_, j_ = directions.pop(random.randrange(len(directions)))
+
+            if not 0 <= i_ < self.num_cols or not 0 <= j_ < self.num_rows:
+                continue
+            if self._cells[i_][j_].visited:
+                continue
+            
+            new_cell = self._cells[i_][j_]
+
+            if self._cells_connected(i, j, i_, j_):
+                current_cell.draw_move(new_cell)
+                solved = self._solve_r(i_, j_)
+            
+                if solved:
+                    break
+                else:
+                    current_cell.draw_move(new_cell, undo=True)
+
+        return solved
+
+    def _cells_connected(self, i, j, i_, j_):
+        if j - 1 == j_ and self._cells[i][j].has_top_wall == False:
+            return True
+        if j == j_ - 1 and self._cells[i][j].has_bottom_wall == False:
+            return True
+        if i - 1 == i_ and self._cells[i][j].has_left_wall == False:
+            return True
+        if i == i_ - 1 and self._cells[i][j].has_right_wall == False:
+            return True
+        return False

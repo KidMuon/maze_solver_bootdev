@@ -8,7 +8,10 @@ def main():
     win = Window(800, 600)
 
     maze = Maze(50, 50, 20, 28, 25, 25, win)
-
+    #maze = Maze(50, 50, 1, 2, 200, 200, win)
+    maze.generate()
+    maze.solve()
+    print("Solve Returned")
     win.wait_for_close()
 
 

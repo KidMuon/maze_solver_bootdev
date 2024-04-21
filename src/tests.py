@@ -33,6 +33,25 @@ class Tests(unittest.TestCase):
             for row_index in range(rows):
                 self.assertFalse(m1._cells[col_index][row_index].visited)
 
+    def test_cells_connected_function(self):
+        m1 = Maze(10, 10, 1, 3, 3, 3)
+        m1.generate()
+        self.assertTrue(m1._cells_connected(0, 0, 1, 0))
+        self.assertTrue(m1._cells_connected(1, 0, 2, 0))
+        self.assertFalse(m1._cells_connected(0, 0, 2, 0))
+        self.assertTrue(m1._cells_connected(1, 0, 0, 0))
+        self.assertTrue(m1._cells_connected(2, 0, 1, 0))
+        self.assertFalse(m1._cells_connected(2, 0, 0, 0))
+
+        m2 = Maze(10, 10, 3, 1, 3, 3)
+        m2.generate()
+        self.assertTrue(m2._cells_connected(0, 0, 0, 1))
+        self.assertTrue(m2._cells_connected(0, 1, 0, 2))
+        self.assertFalse(m2._cells_connected(0, 0, 0, 2))
+        self.assertTrue(m2._cells_connected(0, 1, 0, 0))
+        self.assertTrue(m2._cells_connected(0, 2, 0, 1))
+        self.assertFalse(m2._cells_connected(0, 2, 0, 0))
+
 
 if __name__ == "__main__":
     unittest.main()
